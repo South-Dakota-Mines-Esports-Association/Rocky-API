@@ -14,7 +14,7 @@ class Member(db.Model):
     DiscordUserID = db.Column(db.String(32), nullable=False)
     DiscordUsername = db.Column(db.String(32), nullable=False)
     AcademicYear = db.Column(db.Enum('Freshman', 'Sophomore', 'Junior', 'Senior', 'Grad'), nullable=False)
-    LastActive = db.Colum(db.Date, nullable=True)
+    LastActive = db.Column(db.Date, nullable=True)
 
     # Relationships
     games = db.relationship('MemberGame', back_populates='member', cascade='all, delete-orphan')
