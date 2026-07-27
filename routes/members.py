@@ -88,7 +88,7 @@ def ping_member(student_id):
         return jsonify({'error': 'Not found'}), 404
 
     try:
-        setattr(member, "LastActive", datetime.today().isoformat())
+        setattr(member, "LastActive", datetime.date.today().isoformat())
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
