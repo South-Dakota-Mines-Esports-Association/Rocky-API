@@ -96,8 +96,19 @@ def ping_member(student_id):
         return jsonify({'error': 'Data conflict'}), 409
     except Exception as e:
         db.session.rollback()
-        print("Borked here")
         return jsonify({'error': str(e)}), 400
 
-        
-        
+
+@members_bp.route('/is_active/<int:student_id>', methods=['GET'])
+def is_member_active(student_id):
+    member = Member.query.get(student_id)
+    if not member:
+        return jsonify({'error': 'Not found'}), 404
+
+    try:
+        # Check if the user has been inactive for more than a year.
+        lastActive = datetime.date.fromisoformat(member.LastActive)
+        today = datetime.date.today()
+        return jsonify({'timeSinceActive': today-lastActive}), 204
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400

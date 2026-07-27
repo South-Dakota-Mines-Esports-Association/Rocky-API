@@ -13,6 +13,7 @@ class MemberSchema(Schema):
     last_active = fields.Date(attribute='LastActive', allow_none=True)
 
 
+
 class GameSchema(Schema):
     game_id = fields.Int(attribute='GameID', required=True)
     name = fields.Str(attribute='Name', required=True)
