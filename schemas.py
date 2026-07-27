@@ -10,6 +10,7 @@ class MemberSchema(Schema):
     discord_user_id = fields.Int(attribute='DiscordUserID', allow_none=True)
     discord_username = fields.Str(attribute='DiscordUsername', allow_none=True)
     academic_year = fields.Str(attribute='AcademicYear', required=True)
+    last_active = fields.Date(attribute='LastActive', allow_none=True)
 
 
 class GameSchema(Schema):
