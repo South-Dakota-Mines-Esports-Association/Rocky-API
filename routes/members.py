@@ -90,6 +90,7 @@ def ping_member(student_id):
     try:
         data = member_schema.load(request.get_json(), partial=True)
         setattr(member, "LastActive", datetime.date().isoformat())
+        print("Set new lastActive")
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
@@ -97,5 +98,6 @@ def ping_member(student_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
+
         
         
