@@ -88,7 +88,6 @@ def ping_member(student_id):
         return jsonify({'error': 'Not found'}), 404
 
     try:
-        data = member_schema.load(request.get_json(), partial=True)
         setattr(member, "LastActive", datetime.date().isoformat())
         db.session.commit()
     except IntegrityError:
