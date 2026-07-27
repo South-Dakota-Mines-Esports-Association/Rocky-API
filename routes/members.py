@@ -90,6 +90,7 @@ def ping_member(student_id):
     try:
         setattr(member, "LastActive", datetime.date.today().isoformat())
         db.session.commit()
+        return '', 204
     except IntegrityError:
         db.session.rollback()
         return jsonify({'error': 'Data conflict'}), 409
