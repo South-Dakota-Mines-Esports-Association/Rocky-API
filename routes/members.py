@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy.exc import IntegrityError
 from models import db, Member
 from schemas import MemberSchema
+import datetime
 
 members_bp = Blueprint('members', __name__, url_prefix='/api/v1/members')
 
@@ -78,3 +79,23 @@ def delete_member(student_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
+
+
+@members_bp.route('/ping/<int:student_id>', methods=['POST'])
+def ping_member(student_id):
+    member = Member.query.get(student_id)
+    if not member:
+        return jsonify({'error': 'Not found'}), 404
+
+    try:
+        data = member_schema.load(request.get_json(), partial=True)
+        setattr(member, "LastActive", datetime.date().isoformat())
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({'error': 'Data conflict'}), 409
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+        
+        
